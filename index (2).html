@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARA Sales AI — Самая реалистичная голосовая AI платформа</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .nav-link i {
+            font-size: 0.8rem;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-login {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            color: #ffffff;
+        }
+
+        .btn-signup {
+            background: #ffffff;
+            color: #000000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-signup:hover {
+            background: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 40px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #cccccc;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+        }
+
+        .features-section {
+            padding: 80px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            margin-bottom: 60px;
+        }
+
+        .feature-tab {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-tab:hover,
+        .feature-tab.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-tab i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #cccccc;
+        }
+
+        .feature-tab span {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .ai-widget-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 60px 40px;
+            margin: 80px auto;
+            text-align: center;
+            max-width: 1000px;
+        }
+
+        .widget-title {
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .widget-description {
+            color: #cccccc;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .demo-section {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cccccc;
+            font-style: italic;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+                background: none;
+                border: none;
+                color: #ffffff;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .hero {
+                padding: 120px 20px 80px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1px;
+            }
+
+            .feature-tab {
+                padding: 15px 10px;
+            }
+
+            .feature-tab span {
+                font-size: 0.8rem;
+            }
+
+            .ai-widget-section {
+                margin: 40px 20px;
+                padding: 40px 20px;
+            }
+
+            .widget-title {
+                font-size: 2rem;
+            }
+        }
+
+        .sound-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sound-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .sound-button:active::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles" id="particles"></div>
+
+    <nav class="navbar">
+        <a href="#" class="logo">ARA Sales AI</a>
+        
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link">Голосовая Платформа <i class="fas fa-chevron-down"></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">AI Агенты <i class="fas fa-chevron-down"></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Разработчикам <i class="fas fa-chevron-down"></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Ресурсы <i class="fas fa-chevron-down"></i></a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Корпоративным</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Цены</a>
+            </li>
+        </ul>
+
+        <div class="auth-buttons">
+            <a href="#" class="btn-login">Войти</a>
+            <button class="btn-signup sound-button" onclick="handleRegistration()">Регистрация</button>
+        </div>
+
+        <button class="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <main>
+        <section class="hero fade-in">
+            <h1 class="hero-title">Самая реалистичная голосовая AI платформа</h1>
+            <p class="hero-subtitle">
+                AI голосовые модели и продукты, используемые миллионами разработчиков, создателей и предприятий. 
+                От низколатентных разговорных агентов до ведущего AI генератора голоса для озвучки и аудиокниг.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary sound-button" onclick="handleRegistration()">
+                    РЕГИСТРАЦИЯ
+                </button>
+                <button class="btn-secondary sound-button" onclick="handleContactSales()">
+                    СВЯЗАТЬСЯ С ОТДЕЛОМ ПРОДАЖ
+                </button>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-tab active sound-button">
+                    <i class="fas fa-microphone"></i>
+                    <span>ТЕКСТ В РЕЧЬ</span>
+                </div>
+                <div class="feature-tab sound-button">
+                    <i class="fas fa-robot"></i>
+                    <span>АГЕНТЫ</span>
+                </div>
+                <div class="feature-tab sound-button">
+                    <i class="fas fa-music"></i>
+                    <span>МУЗЫКА</span>
+                </div>
+                <div class="feature-tab sound-button">
+                    <i class="fas fa-file-audio"></i>
+                    <span>РЕЧЬ В ТЕКСТ</span>
+                </div>
+                <div class="feature-tab sound-button">
+                    <i class="fas fa-video"></i>
+                    <span>ДУБЛЯЖ</span>
+                </div>
+                <div class="feature-tab sound-button">
+                    <i class="fas fa-clone"></i>
+                    <span>КЛОНИРОВАНИЕ ГОЛОСА</span>
+                </div>
+            </div>
+
+            <div class="ai-widget-section">
+                <h2 class="widget-title">Попробуйте ARA Sales AI прямо сейчас</h2>
+                <p class="widget-description">
+                    Начните разговор с нашим AI-помощником и убедитесь в его возможностях. 
+                    Задайте любой вопрос о продажах, маркетинге или бизнес-процессах.
+                </p>
+                
+                <!-- ElevenLabs Convai Widget -->
+                <elevenlabs-convai agent-id="agent_4501k59br17yf06sw95adk777v00"></elevenlabs-convai>
+
+                <div class="demo-section">
+                    <div class="demo-text">
+                        "В древней земле Элдории, где небеса мерцали, а леса шептали секреты ветру, жила молодая волшебница по имени Лира. Её магия была уникальной - она могла оживлять истории, превращая слова в реальность..."
+                    </div>
+                    <button class="btn-primary sound-button" onclick="handleDemoPlay()">
+                        <i class="fas fa-play"></i> Воспроизвести Демо
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ElevenLabs Script -->
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+    <script>
+        // API базовый URL (для продакшена)
+        const API_BASE_URL = 'https://mzhyi8c1951m.manus.space';
+
+        // Функция для отправки запросов к API
+        async function sendButtonClick(buttonType, userData = {}) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/button-click`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        button_type: buttonType,
+                        user_data: userData
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    handleApiResponse(result);
+                } else {
+                    console.error('API Error:', result.message);
+                    showNotification('Произошла ошибка. Попробуйте позже.', 'error');
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+                showNotification('Ошибка соединения. Проверьте интернет.', 'error');
+            }
+        }
+
+        // Обработка ответов от API
+        function handleApiResponse(response) {
+            showNotification(response.message, 'success');
+            
+            switch (response.action) {
+                case 'redirect':
+                    if (response.redirect_url) {
+                        window.location.href = response.redirect_url;
+                    }
+                    break;
+                case 'show_modal':
+                    showModal(response.modal_content || response.message);
+                    break;
+                case 'play_audio':
+                    if (response.audio_url) {
+                        playAudio(response.audio_url);
+                    }
+                    break;
+                case 'update_content':
+                    updateFeatureContent(response.content);
+                    break;
+            }
+        }
+
+        // Показ уведомлений
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                max-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Показ модального окна
+        function showModal(content) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10001;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: #1a1a1a;
+                color: white;
+                padding: 30px;
+                border-radius: 12px;
+                max-width: 500px;
+                margin: 20px;
+                text-align: center;
+                border: 1px solid rgba(255,255,255,0.2);
+            `;
+            modalContent.innerHTML = `
+                <p style="margin-bottom: 20px; line-height: 1.6;">${content}</p>
+                <button onclick="this.closest('.modal').remove()" style="
+                    background: #ffffff;
+                    color: #000000;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: 600;
+                ">Закрыть</button>
+            `;
+            
+            modal.className = 'modal';
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+
+        // Воспроизведение аудио
+        function playAudio(audioUrl) {
+            const audio = new Audio(audioUrl);
+            audio.volume = 0.7;
+            audio.play().catch(e => console.log('Audio play failed:', e));
+        }
+
+        // Обновление контента функций
+        function updateFeatureContent(content) {
+            // Здесь можно добавить логику обновления контента на странице
+            console.log('Feature content:', content);
+        }
+
+        // Звуковой эффект для кнопок
+        function playClickSound() {
+            const audio = new Audio('button_click.wav');
+            audio.volume = 0.3;
+            audio.play().catch(e => console.log('Audio play failed:', e));
+        }
+
+        // Обработчики для конкретных кнопок
+        function handleRegistration() {
+            playClickSound();
+            sendButtonClick('registration');
+        }
+
+        function handleContactSales() {
+            playClickSound();
+            sendButtonClick('contact_sales');
+        }
+
+        function handleDemoPlay() {
+            playClickSound();
+            sendButtonClick('demo_play');
+        }
+
+        function handleFeatureTab(element) {
+            playClickSound();
+            const featureName = element.querySelector('span').textContent.toLowerCase().replace(/\s+/g, '_');
+            sendButtonClick('feature_tab', { feature_name: featureName });
+        }
+
+        // Создание плавающих частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Анимация появления элементов при скролле
+        function observeElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0s';
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+
+            const elements = document.querySelectorAll('.features-section, .ai-widget-section');
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Переключение активной вкладки
+        function setupFeatureTabs() {
+            const tabs = document.querySelectorAll('.feature-tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    handleFeatureTab(this);
+                });
+            });
+        }
+
+        // Плавная прокрутка для навигации
+        function setupSmoothScroll() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Эффект параллакса для навбара
+        function setupNavbarEffect() {
+            const navbar = document.querySelector('.navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+                    navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.2)';
+                } else {
+                    navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+                    navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+                }
+            });
+        }
+
+        // Добавление звукового эффекта ко всем кнопкам
+        function setupSoundEffects() {
+            const soundButtons = document.querySelectorAll('.sound-button');
+            
+            soundButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Визуальный эффект
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        }
+
+        // Добавление CSS для анимаций уведомлений
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            observeElements();
+            setupFeatureTabs();
+            setupSmoothScroll();
+            setupNavbarEffect();
+            setupSoundEffects();
+            
+            // Добавление задержки для анимации hero секции
+            setTimeout(() => {
+                document.querySelector('.hero').style.animationDelay = '0.3s';
+            }, 100);
+        });
+
+        // Мобильное меню
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
+
